@@ -350,7 +350,7 @@ def start_work(files, args):
 						if CONSOLE_DEBUG_MODE:
 							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
 						else:
-							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', '10M', '-b:a', '192K', output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-c:v', 'copy', '-c:a', 'libopus', '-ac 2 -ar 48000 -b:a 192k -compression_level 10 -vbr on -mapping_family 1',  output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 							with process.stderr:
 								log_subprocess_output(process.stderr, process)
 							p_status = process.wait()
